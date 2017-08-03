@@ -6,7 +6,8 @@ module.exports = {
     entry: __dirname + '/src/js/index.js',
     output: {
         path: __dirname,
-        filename: '[name]-[chunkhash].js'
+        // filename: '[name]-[chunkhash].js'
+        filename: 'main.js'
     },
     module: {
         rules: [{
@@ -53,7 +54,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({ //生成主页
-            title: '彭双的个人主页',
+            title: 'Github•彭双',
             template: __dirname + '/src/template.html',
             filename: 'index.html',
             inject: 'body',
@@ -62,7 +63,8 @@ module.exports = {
                 removeComment: false
             }
         }),
-        new ExtractTextPlugin('[name]-[contenthash].css'),//拆分出的css文件，参数是名字
+        // new ExtractTextPlugin('[name]-[contenthash].css')//拆分出的css文件，参数是名字
+        new ExtractTextPlugin('main.css'),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
