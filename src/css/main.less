@@ -1,0 +1,614 @@
+@bgColor: #282828;  //主题背景颜色
+@baseColor: #ffcc00;    //副颜色
+@eyesW: 170px;  //眼眶宽度
+@eyesH: 100px;  //眼眶高度
+@zone: 80%; //眼球可活动区域
+@panelW: 22%; //折叠板的宽度
+@panelH: 600px; //折叠板的高度
+@panelC: #a2474e;  //折叠板颜色
+@panelCHV: #ab4b52;   //折叠板hover颜色
+@responsiveW: 1080px;   //触发响应式的宽度
+
+body,html{
+    width: 100%;
+    height: 100%;
+}
+
+.childTF(@index;@rest...){
+    &:nth-child(@{index}){
+        transform: @rest;
+    }
+}
+.opacity(@num){
+    @alpha: @num*100;
+    opacity: @num;
+    filter: alpha(opacity=@alpha);
+}
+
+//页面加载动画
+.loading_cover{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.8);
+    .loading{
+        @barW: 5px; //加载条的宽度
+        @barH: 18px;//加载条的高度
+        font-size: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -(@barH+4)/2 0 0 -(@barW+4)*3/2;
+        span{
+            display: inline-block;
+            width: @barW;
+            height: @barH;
+            margin: 2px;
+            background-color: #fff;
+            transform-origin: 50%;
+
+            .loop(@count) when (@count > 0) {
+                .loop(@count - 1);
+                &:nth-child(@{count}){
+                    animation: loading 1.5s infinite;
+                    animation-delay: @count / 2s;
+                }
+            }
+            
+            .loop(3);
+        }
+        @keyframes loading{
+            0% {
+                transform: scale(1, 1);
+                background-color: #fff;
+            }
+            
+            16.5% {
+                transform: scale(1, 1.5);
+                background-color: @baseColor;
+            }
+
+            33% {
+                transform: scale(1, 1);
+                background-color: #fff;
+            }
+
+            100% {
+                transform: scale(1, 1);
+                background-color: #fff;
+            }
+        }
+        .textTips:before{
+            display: block;
+            content: '正在加载';
+            font-size: 16px;
+            color: #fff;
+            animation: loadtext 3s infinite;
+            margin: 5px 0 0 -20px;
+
+
+            @keyframes loadtext{
+                0% {
+                    content: '正在加载';
+                }
+                25% {
+                    content: '正在加载 .';
+                }
+                50% {
+                    content: '正在加载 . .';
+                }
+                75% {
+                    content: '正在加载 . . .';
+                }
+                100% {
+                    content: '正在加载';
+                }
+            }
+        }    
+    }
+}
+
+.root{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: @bgColor;
+    cursor: url('../img/fish.ico'), default;
+    font-family: "微软雅黑";
+    overflow: hidden;
+
+    //所用框架和库展示
+    .lib_used{
+        @fontColor: rgba(255, 255, 255, 0.3);
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        text-align: center;
+        margin-bottom: 20px;
+        color: @fontColor;
+        line-height: 30px;
+        z-index: 100;
+
+        &>a{
+            display: inline-block;
+            color: @fontColor;
+            margin-left: 10px;
+            &>i{
+                padding: 0 5px;
+                user-select: none;
+            }
+            &:last-child>i{
+                border: 2px solid @fontColor;
+                padding: 2px;
+                font-size: 12px;
+                font-style: normal;
+                margin-right: 5px;
+                font-weight: bold;
+            }
+            &:hover{
+                .bandColor(@index;@color){
+                    &:nth-child(@{index}){
+                        color: @color;
+                    }
+                }
+                transform: scale(1.3);
+                text-decoration: none;
+                transition: color 0.3s, transform 0.3s;
+                .bandColor(1,#c75032);
+                .bandColor(2,#1368a8);
+                .bandColor(3,#6b94d6);
+                .bandColor(4,#284879);
+                .bandColor(5,#78cff5);
+                .bandColor(6,#f3d93e);
+                &:last-child i{
+                    border-color: #f3d93e;
+                    background-color: #f3d93e;
+                    color: @bgColor;
+                }
+            }
+        }
+    }
+
+    // 喵星人的凝视
+    .meow{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        height: 250px;
+        margin: -125px -200px;
+
+        overflow: hidden;
+        .eye_line{
+            width: @eyesW;
+            height: @eyesH;
+            border: 2px solid @baseColor;
+            position: relative;
+            overflow: hidden;
+
+            .act_zone{
+                width: @zone;
+                height: @zone;
+                position: absolute;
+                margin: 0 auto;
+                top: 10px;
+                left: 17px;
+
+                .eyeball{
+                    width: 80px;
+                    height: 80px;
+                    background: @baseColor;
+                    background: -webkit-radial-gradient(60px 10px,circle, #fff, @baseColor 50px);
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 0;
+                    left: 28px;
+                    transition: top 0.3s, left 0.6s;
+                }
+            }
+        }
+
+        .left_eye{
+            border-radius: 0 105px 0 105px;
+            float: left;
+        }
+        .right_eye{
+            float: right;
+            border-radius: 105px 0 105px 0;
+        }
+
+        .beard{
+            width: 100%;
+            height: 146px;
+            margin: 150px auto 0;
+
+            &>i{
+                display: block;
+                width: 150px;
+                height: 60px;
+                border-top: 1px solid @baseColor;
+                border-radius: 20px 0;
+                margin-top: -30px;
+
+                &::before{
+                    display: block;
+                    width: 20px;
+                    height: 20px;
+                    content: '';
+                    border: 1px solid @baseColor;
+                    border-right: none;
+                    border-bottom: none;
+                    border-radius: 50%;
+                    transform: rotate(258deg) translate(-4px);
+                }
+                
+                &:nth-child(odd){
+                    margin-left: 10px;
+                    float: left;
+                }
+                &:nth-child(even){
+                    margin-right: 10px;
+                    float: right;
+                }
+                
+                .childTF(1;rotate(15deg));
+                .childTF(5;rotate(-15deg);translate(10px));
+                .childTF(2;rotate(-15deg);rotateY(180deg));
+                .childTF(4;rotateY(180deg));
+                .childTF(6;rotate(15deg);translate(-10px);rotateY(180deg));
+                
+            }
+        }
+
+        .nose{
+            position: absolute;
+            border: 15px solid transparent;
+            border-top-color: @baseColor;
+            top: 144px;
+            left: 185px;
+            
+            .noseM(@top;@left){
+                position: absolute;
+                top: @top;
+                left: @left;
+                content: '';
+                display:block;
+                width: 30px;
+                height: 30px;
+                border-bottom:2px solid @baseColor;
+                border-radius: 50%;
+            }
+            &::before{
+                .noseM(-24px;-2px);
+            }
+
+            &::after{
+                .noseM(-24px;-28px);
+            }
+        }
+    }
+    
+    //折叠板
+    .contacts{
+        position: absolute;
+        top: 50%;
+        margin-top: -@panelH / 2;
+        height: @panelH;
+        width: 100%;
+        min-width: 1000px;
+        @media screen and (max-width:@responsiveW){
+            height: 500px;
+            margin-top: -250px;
+        }
+
+        &>div{
+            position: absolute;
+            width: @panelW;
+            height: 100%;
+            background-color: @panelC;
+            color: #fff;
+            transform-origin: left center;
+            border-radius: 10px;
+            transition: background-color .3s;
+            cursor: default;
+            overflow-y: auto;
+
+            &.collapse{
+                transform: perspective(1500px) rotateY(-90deg);
+                
+                .childTF(even;perspective(1500px);rotateY(90deg))
+                
+            }
+
+            &:nth-child(even){
+                transform-origin: right center;
+            }
+
+            &:hover{
+                background-color: @panelCHV;
+            }
+        }
+
+        .intro{
+            .profile{
+                position: relative;
+                text-align: center;
+                padding: 20px 0;
+                .icon-ren{
+                    font-size: 80px;
+                }
+                .icon-yanjing{
+                    font-size: 38px;
+                    color: black;
+                    position: absolute;
+                    top: 31px;
+                    left: 50%;
+                    margin-left: -19px;
+                    transform: translateY(-44px) rotate(180deg);
+                    .opacity(0);
+                }
+                @media screen and (max-width:@responsiveW){
+                    padding: 14px 0 0;
+                    & .icon-ren{
+                        font-size: 60px;
+                    }
+                    & .icon-yanjing{
+                        font-size: 32px;
+                        top: 21px;
+                        margin-left: -16px;
+                    }
+                }
+
+            }
+            &:hover .icon-yanjing{
+                animation: glasses 1.5s forwards;
+                @keyframes glasses{
+                    from {
+                        transform: translateY(-44px) rotate(180deg);
+                        .opacity(0);
+                    }
+                    to {
+                        transform: translateY(0px) rotate(360deg);
+                        .opacity(1);
+                    }
+                }
+            }
+
+            span{
+                display: block;
+                float: left;
+                background-color: #fff;
+                color: @panelCHV;
+                border-radius: 3px;
+                margin: 12px 6px 0 12px;
+                padding: 2px 8px;
+                @media screen and (max-width:@responsiveW){
+                    margin: 12px 0 0 12px;
+                    font-size: 14px;
+                }
+                &:hover{
+                    background-color: @panelCHV;
+                    color: #fff;
+                }
+            }
+        }
+        
+        .exp{
+            padding: 25px 22px;
+            box-sizing: border-box;
+            
+            .exp_card{
+                padding: 16px;
+                border: 2px solid #fff;
+                border-right-color: transparent;
+                border-top-color: transparent;
+                line-height: 24px;
+                margin: 0 0 20px 0;
+
+                span{
+                    font-family: Impact, Charcoal, sans-serif;
+                    margin-right: 10px;
+                }
+                &:last-child{
+                    line-height: 40px;
+                    text-align: center;
+                    font-size: 25px;
+                }
+                &:hover{
+                    color: @panelCHV;
+                    background-color: #fff;
+                }
+                .textLimited{
+                    height: 24px;
+                    overflow: hidden;
+                    width: 100%;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;    
+                    &:hover{
+                        color: #fff;
+                        background-color: @panelCHV;
+                        cursor: pointer;
+                    }
+                }
+                .releaseIt{
+                    height: auto;
+                    text-overflow: inherit;
+                    white-space: normal;
+                    &:hover{
+                        color: @panelCHV;
+                        background-color: #fff;
+                    }
+                }
+            }
+
+            @media screen and (max-width:@responsiveW){
+                padding: 20px 18px;
+                & .exp_card{
+                    font-size: 14px;
+                    line-height: 20px;
+                    padding: 14px;
+                    margin-bottom: 16px;
+                }
+                & .exp_card:last-child{
+                    line-height: 35px;
+                    font-size: 22px;
+                }
+            }
+            
+            &:hover{
+                .exp_card:last-child{
+                    animation: bouncein 0.5s linear forwards;
+                    .bounce(@scale;@opacity){
+                        transform: scale(@scale);
+                        .opacity(@opacity);
+                    }
+                    @keyframes bouncein{
+                        0% {
+                            .bounce(1,1);
+                        }
+                        20% {
+                            .bounce(1.1,1.1);
+                        }
+                        100% {
+                            .bounce(0,0);
+                        }
+                    }
+                }
+            }
+
+            &:nth-of-type(3){
+                .exp_card{
+                    border-color: #fff #fff transparent transparent;
+                }
+            }
+        }
+        
+        .me{
+            padding: 25px 22px;
+            font-size: 19px;
+            line-height: 45px;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            vertical-align: middle;
+            text-align: center;
+            box-sizing: border-box;
+            &>div{
+                border: 1px solid #fff;
+                border-color: transparent #fff;
+                &:last-child{
+                    position: relative;
+                    cursor: pointer;
+                    &:before{
+                        content: '';
+                        position: absolute;
+                        width: 150px;
+                        height: 150px;
+                        left: 50%;
+                        top: -145px;
+                        margin-left: -75px;
+                        background: url('../img/wxQRCode.jpg');
+                        background-size: cover;
+                        transition: transform 0.5s, opacity 0.5s;
+                        .opacity(0);
+                        transform: translateY(100px) scale(0);
+                    }
+                    &:hover:before{
+                        .opacity(1);
+                        transform: translateY(0px) scale(1);
+                    }
+                }
+            }
+            &:hover{
+
+                &>div{
+                    .waveLoop(@count) when (@count > 0){
+                        .waveLoop(@count - 1);
+                        &:nth-child(@{count}){
+                            animation: wave .5s forwards;
+                            animation-delay: (@count - 1)*0.1s;
+                        }
+                    }
+                    .waveLoop(7);
+                    @keyframes wave{
+                        from {
+                            transform: translateY(20px);
+                            color: #fff;
+                            .opacity(0);
+                        }
+                        to {
+                            transform: translateY(0px);
+                            .opacity(1);
+                        }
+                    }  
+                }
+            }
+            i{
+                display: inline-block;
+                width: 25px;
+                text-align: center;
+                margin-right: 10px;
+
+                &+span:hover{
+                    cursor: pointer;
+                }
+            }
+
+            a{
+                color: #fff;
+            }
+
+            @media screen and (max-width: @responsiveW){
+                font-size: 18px;
+                & i{
+                    width: 22px;
+                    margin-right: 6px;
+                }
+                &>div{
+                    border: none;
+                }
+            }
+            
+        }
+
+        &>span{
+            display: block;
+            position: absolute;
+            left: 0;
+            color: @baseColor;
+            top: 45%;
+            cursor: pointer;
+
+            i.icon-yugou{ 
+                display: block;
+                font-size: 50px;
+                color: #ccc;
+                transform: rotate(90deg) rotateX(180deg) translateY(-6px);
+            }
+            i.icon-yu{
+                display: block;
+                font-size: 50px;
+                
+                &::before{
+                    display: block;
+                    animation: sway 1.3s infinite alternate ease-in-out;
+                    transform: translateX(-32px) rotate(-90deg);
+                    transform-origin: center right;
+                    margin-top: -46px;
+
+                    @keyframes sway{
+                        0%{
+                            transform: translateX(-32px) rotate(-135deg);
+                        }
+    
+                        100%{
+                            transform: translateX(-32px) rotate(-45deg);
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+
+
+}
