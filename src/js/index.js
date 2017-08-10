@@ -7,6 +7,7 @@ import * as browser from '../js/browsers.js';   //判断浏览器的js模块
 let scrollBarW = 17;    //pc浏览器中的滚动条宽度
 if(browser.isMobile()){
     scrollBarW = 0;     //移动端浏览器中的滚动条宽度
+    $('.icon-qq').next().attr('href', 'mqqwpa://im/chat?chat_type=wpa&uin=437919792&version=1&src_type=web&web_src=oicqzone.com');//移动端点击qq号跳转至聊天界面
 }else if(browser.isIE()){
     $('.root').css('cursor', 'default');
 }else{
