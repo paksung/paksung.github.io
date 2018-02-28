@@ -1,8 +1,11 @@
 import '../css/common.less'; //引入公共css文件
 import '../css/main.less'; //引入主页面的样式
 import '../font/iconfont.css'; //图标字体
+import '../css/simCustomScroll.less';   //自定义滚动条的样式
 import $ from 'jquery'; //引入jQuery
 import * as browser from '../js/browsers.js';   //判断浏览器的js模块
+
+let simCustomScroll = !browser.isMobile() && require('../js/simCustomScroll.js');//非移动端才加载自定义滚动js
 
 let scrollBarW = 17;    //pc浏览器中的滚动条宽度
 if(browser.isMobile()){
@@ -106,6 +109,12 @@ $(window).on('resize', function(e) {
 //展开收缩内容
 $('.textLimited').on('click', function(e){
     $(this).toggleClass('releaseIt');
+    
+    if(simCustomScroll){//更新自定义滚动条高度
+        let temp = $(this).parentsUntil('.simCustomScroll'),
+            parent = temp.eq(temp.length - 1).parent();
+        simCustomScroll.updateBar(parent);
+    }
 });
 
 //显示隐藏手机号码

@@ -1,0 +1,26 @@
+@responsiveW: 1080px;   //触发响应式的宽度
+.simCustomScroll{
+	position: relative;
+	&:hover>.smbar{
+		opacity: 0.6;
+	}
+	.smbar{
+		position: absolute;
+		top: 0;
+		right: 4px;
+		width: 6px;
+		height: 0;
+		border-radius: 5px;
+		background: white;
+		opacity: 0;
+		transition: opacity 0.3s, top 0.3s;
+	}
+	.simScrollWrapper{
+		padding: 25px 22px;
+    	box-sizing: border-box;
+    	transition: margin-top 0.3s;
+    	@media screen and (max-width:@responsiveW){
+            padding: 20px 18px;
+        }
+	}
+}
