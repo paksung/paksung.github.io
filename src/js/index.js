@@ -7,10 +7,6 @@ import * as browser from '../js/browsers.js';   //判断浏览器的js模块
 
 let simCustomScroll = !browser.isMobile() && require('../js/simCustomScroll.js');//非移动端才加载自定义滚动js
 
-$.get('https://paksung.github.io/data/tagexp.json', function(res){
-    console.log(res)
-})
-
 let scrollBarW = 17;    //pc浏览器中的滚动条宽度
 if(browser.isMobile()){
     scrollBarW = 0;     //移动端浏览器中的滚动条宽度
@@ -21,10 +17,17 @@ if(browser.isMobile()){
     browser.isFirefox() ? $('.contacts>span').css('cursor', 'grab') : $('.contacts>span').css('cursor', '-webkit-grab');
 }
 
-$('body').on('mousemove', moveEyeBalls)
+$('body').on('mousemove', moveEyeBalls);
 $('.loading_cover').on('mousemove', function(e){
      e.stopPropagation ? e.stopPropagation() : e.originalEvent.cancelBubble = true;
  });
+
+$.get('https://paksung.github.io/data/tagexp.json', function(res){
+    let tags = res.tags.map(function(item, index){
+        return '<span>'+item+'</span>';
+    });
+    $('.collapse.intro').append(tags);
+});
 
 /**
  * 眼球跟随鼠标位置移动
