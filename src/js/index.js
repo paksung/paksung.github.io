@@ -7,6 +7,10 @@ import * as browser from '../js/browsers.js';   //判断浏览器的js模块
 
 let simCustomScroll = !browser.isMobile() && require('../js/simCustomScroll.js');//非移动端才加载自定义滚动js
 
+$.get('https://paksung.github.io/data/tagexp.json', function(res){
+    console.log(res)
+})
+
 let scrollBarW = 17;    //pc浏览器中的滚动条宽度
 if(browser.isMobile()){
     scrollBarW = 0;     //移动端浏览器中的滚动条宽度
