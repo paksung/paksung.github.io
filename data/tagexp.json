@@ -1,3 +1,13 @@
 {
-	"tags": ["less","VUE","javascript","HTML5","CSS3","Angularjs","webpack","jQuery","ECMAScript6","json","echarts3","ajax","bootstrap","CET-4","nodejs","github","移动端页面","响应式","兼容性","代码规范","进取心","责任心","协作精神","时间观"]
+	"tags": ["less","VUE","javascript","HTML5","CSS3","Angularjs","webpack","jQuery","ECMAScript6","json","echarts3","ajax","bootstrap","CET-4","nodejs","github","移动端页面","响应式","兼容性","代码规范","进取心","责任心","协作精神","时间观"],
+	"workexp": [{
+		"date": "2012.09 - 2016.07",
+		"experience": "广东海洋大学",
+		"role": "学生"
+	},{
+		"date": "2016.12 - 至今",
+		"experience": "深圳市同速科技发展有限公司",
+		"role": "前端工程师"
+	}],
+	"projectexp": []
 }
