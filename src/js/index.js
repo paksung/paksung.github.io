@@ -22,13 +22,6 @@ $('.loading_cover').on('mousemove', function(e){
      e.stopPropagation ? e.stopPropagation() : e.originalEvent.cancelBubble = true;
  });
 
-$.get('https://paksung.github.io/data/tagexp.json', function(res){
-    let tags = res.tags.map(function(item, index){
-        return '<span>'+item+'</span>';
-    });
-    $('.collapse.intro').append(tags);
-});
-
 /**
  * 眼球跟随鼠标位置移动
  * @param  {Object} e event
@@ -131,9 +124,33 @@ $('.me>div:nth-child(2) i+span').hover(function() {
     $(this).html('176****8778');
 });
 
+$.get('https://paksung.github.io/data/tagexp.json', function(res){
+    let tags = res.tags.map(function(item, index){
+        return '<span>'+item+'</span>';
+    });
+    let work = res.tags.map(function(item, index){
+        return `<div class="exp_card">
+                    <span>DATE:</span>${item.date} <br />
+                    <span>EXPERIENCE:</span>${item.experience} <br />
+                    <span>ROLE:</span>${item.role}
+                </div>`;
+    });
+    let project = res.tag.map(function(item, index){
+        return `<div class="exp_card">
+                    <span>DATE:</span>${item.date} <br />
+                    <span>PROJECT:</span>${item.project} <br />
+                    <div class="textLimited"><span>DESCRIPTION:</span>${item.des}</div>
+                    <div class="textLimited"><span>DUTY:</span>${item.duty}</div>
+                </div>`;
+    });
+    $('.collapse.intro').append(tags);
+    $('.collapse.work to_be_continue').before(work);
+    $('.collapse.project to_be_continue').before(project);
 
-//整个网页加载完毕，移除正在加载动画
-$('.loading_cover').remove();
+    //整个网页加载完毕，移除正在加载动画
+    $('.loading_cover').remove();
+});
+
 
 /**
  * 改变每块折叠板、开关的left值，使彼此贴紧在一起
