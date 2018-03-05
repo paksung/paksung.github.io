@@ -107,7 +107,7 @@ $(window).on('resize', function(e) {
 });
 
 //展开收缩内容
-$('.textLimited').on('click', function(e){
+$('.collapse.exp').on('click', '.textLimited', function(e){
     $(this).toggleClass('releaseIt');
     
     if(simCustomScroll){//更新自定义滚动条高度
