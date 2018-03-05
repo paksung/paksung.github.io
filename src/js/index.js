@@ -146,7 +146,10 @@ $.get('https://paksung.github.io/data/tagexp.json', function(res){
     $('.collapse.intro').append(tags);
     $('.collapse.work .to_be_continue').before(work);
     $('.collapse.project .to_be_continue').before(project);
-
+    if(simCustomScroll){
+        simCustomScroll.updateBar($('.simCustomScroll').eq(0));
+        simCustomScroll.updateBar($('.simCustomScroll').eq(1));
+    } 
     //整个网页加载完毕，移除正在加载动画
     $('.loading_cover').remove();
     
