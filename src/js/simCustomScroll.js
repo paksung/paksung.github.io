@@ -49,10 +49,15 @@ function updateBar(el){
 	}
 	let bar = el.children('.smbar'),	//滚动条
 		content = el.children('.simScrollWrapper'),	//内容
-		barH = 0;
+		barH = 0,
+		barTop = parseFloat(bar.css('top'));
 	el.find('.to_be_continue').remove();	//去除“未完待续”块再计算
 	barH = Math.pow(el.outerHeight(), 2) / content.outerHeight();
-	bar.height(barH);
+	barTop = barTop > bar.parent().outerHeight() - barH ? bar.parent().outerHeight() - barH : barTop;//更新滚动条位置
+	bar.css({
+		height: barH + 'px',
+		top: barTop + 'px'
+	});
 }
 
 module.exports = {
