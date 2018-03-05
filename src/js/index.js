@@ -146,13 +146,12 @@ $.get('https://paksung.github.io/data/tagexp.json', function(res){
     $('.collapse.intro').append(tags);
     $('.collapse.work to_be_continue').before(work);
     $('.collapse.project to_be_continue').before(project);
-
-    $(window).load(function(){
-        //整个网页加载完毕，移除正在加载动画
-        $('.loading_cover').remove();
-    });
+    
 });
-
+$(window).load(function(){
+    //整个网页加载完毕，移除正在加载动画
+    $('.loading_cover').remove();
+});
 
 /**
  * 改变每块折叠板、开关的left值，使彼此贴紧在一起
