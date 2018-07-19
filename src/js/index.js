@@ -131,8 +131,8 @@ $.get('https://paksung.github.io/data/tagexp.json', function(res){
     let work = res.workexp.map(function(item, index){
         return `<div class="exp_card">
                     <span>DATE:</span>${item.date} <br />
-                    <span>EXPERIENCE:</span>${item.experience} <br />
-                    <span>ROLE:</span>${item.role}
+                    <span>ORGANIZATION:</span>${item.experience} <br />
+                    <span>POSITION:</span>${item.role}
                 </div>`;
     });
     let project = res.projectexp.map(function(item, index){
